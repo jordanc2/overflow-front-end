@@ -22,6 +22,7 @@ export default function Item() {
       colors: '',
       priceRange: '',
       rating: ''
+      
     },
     onSubmit: () => {
       setOpenFilter(false);
