@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import { Icon } from '@iconify/react';
 import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
@@ -110,7 +111,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined" component={RouterLink} to="/login" type="submit">
             Logout
           </Button>
         </Box>

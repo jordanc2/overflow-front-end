@@ -36,8 +36,7 @@ export default function Router() {
       children: [
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
-        { path: '/', element: <Navigate to="/dashboard" /> }
-        // { path: '*', element: <Navigate to="/404" /> }
+        { path: '/', element: <Navigate to="/login" /> }
       ]
     }
   ]);
