@@ -18,7 +18,6 @@ export default function ItemList({ products, ...other }) {
           <ItemCard key= {product.id} product={product} />
         </Grid>
       ))}
-      
     </Grid>
   );
 }
