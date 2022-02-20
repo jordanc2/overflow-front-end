@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import { filter } from 'lodash';
 import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
