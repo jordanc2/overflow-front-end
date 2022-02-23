@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -16,31 +17,62 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import UserPool from '../UserPool';
+
+
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+ 
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
+    Username: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required')
   });
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
-      remember: true
+      Username: '',
+      password: ''
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      console.log("from values", values)
+      const user = new CognitoUser({
+        Username: email,
+        Pool: UserPool,
+      });
+      console.log("from user", user);
+      const authDetails = new AuthenticationDetails({
+        Username: email,
+        password: password,
+      });
+      console.log("from auth details", authDetails);
+
+      user.authenticateUser(authDetails, {
+        onSuccess: (data) => {
+          console.log("onSuccess: ", data);
+        },
+        onFailure: (err) => {
+          console.error("onFailure: ", err);
+        },
+        newPasswordRequired: (data) => {
+          console.log("newPasswordRequired: ", data);
+        },
+      });
+      navigate('/dashboard/app', { replace: true });
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps, handleChange } = formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -52,20 +84,22 @@ export default function LoginForm() {
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="username"
-            type="email"
+            type="text"
             label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
+            {...getFieldProps('Username')}
+            onChange = {handleChange} 
+            value = {formik.values.Username}
+            error={Boolean(touched.Username && errors.Username)}
+            helperText={touched.Username && errors.Username}
           />
 
           <TextField
             fullWidth
-            autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Password"
+            value = {formik.values.password}
             {...getFieldProps('password')}
+            onChange = {handleChange}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -82,7 +116,7 @@ export default function LoginForm() {
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
+            control={<Checkbox {...getFieldProps('remember')} checked={formik.values.remember} />}
             label="Remember me"
           />
 

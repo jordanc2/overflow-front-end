@@ -37,6 +37,7 @@ export default function Router() {
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
         { path: '/', element: <Navigate to="/login" /> }
+      
       ]
     }
   ]);

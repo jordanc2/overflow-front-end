@@ -1,0 +1,17 @@
+{
+  "providers": [
+    "awscloudformation"
+  ],
+  "projectName": "overflowfrontend",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": "/Users/charlesjordan/Dev/Personal_Projects/material-kit-react/src",
+      "DistributionDir": "/Users/charlesjordan/Dev/Personal_Projects/material-kit-react/build",
+      "BuildCommand": "yarn run build",
+      "StartCommand": "yarn start"
+    }
+  }
+}

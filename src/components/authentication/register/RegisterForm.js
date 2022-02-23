@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -14,6 +15,11 @@ import { LoadingButton } from '@mui/lab';
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
